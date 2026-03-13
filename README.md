@@ -2,7 +2,7 @@
 
 **Intellectual Property Claim for the Post-Patent World**
 
-In today's world, where creative ownership is vital, IPClaim is transforming how authorship is established. By emphasizing evidence, time, and transparency, it sets a new standard for creative ownership.
+IPClaim is a repo toolkit and proof model for publishing authorship claims as public, timestamped, independently verifiable records. `Stamped` is the service/bundling layer built on the same model, not a separate proof system.
 
 ## A New Way to Claim What's Yours
 
@@ -13,6 +13,34 @@ IPClaim replaces traditional paperwork and gatekeeping with cryptographic certai
 - Ownership based on evidence
 
 One system is based on evidence. The other is based on permission.
+
+---
+
+## You Claim What You Made. That's It.
+
+You don't need to know which parts of your work are protectable and which aren't. You don't need to hire a lawyer to figure out the boundaries. You don't need to search databases to check if someone else did something similar. You don't need to classify your work into legal categories.
+
+You publish. You timestamp. You claim everything you created.
+
+If something you made can be protected as a patent — you claimed it. If it falls under copyright — you claimed it. If it falls under some category that doesn't exist yet — you claimed it the moment you published, and the timestamp proves when.
+
+If someone else disclosed their unique IP before you, your claim does not include that part. It only covers the Intellectual Property you created and disclosed, timestamped. Your verifiable unique work is undeniably exposed to the public — no one else can claim it as theirs, for any purpose, in any context.
+
+**What this removes from your life:**
+
+- **No prior art search.** You don't need to pay someone to find out if your work is "novel enough."
+- **No legal classification.** You don't decide what type of protection applies. The work speaks for itself.
+- **No filing fees.** No renewal fees. No maintenance schedule. No expiration.
+- **No gatekeepers.** No examiner approves or rejects your claim. The math proves it.
+- **No waiting.** A patent takes 2-5 years. This takes seconds.
+
+**What you keep:**
+
+- Full ownership of everything you created.
+- Permanent proof that you created it first.
+- A record that anyone can verify — courts, investors, competitors, collaborators — using free tools, in under a minute.
+
+The traditional system asks you to be an inventor, a lawyer, a business analyst, and a clerk — all at once, all on your own dime, all before you're allowed to say "this is mine." IPClaim asks you to do one thing: publish your work.
 
 ---
 
@@ -48,7 +76,7 @@ If `stamp.sh` doesn't work for your setup, you can perform the same steps by han
 
 Select from two license options:
 
-- `LICENSE-APC.md` — All rights reserved, with authorship and patent claim
+- `LICENSE-APC.md` — All rights reserved, with authorship and IP claim
 - `LICENSE-APC-VF.md` — Same, with ValueFlow profit sharing included
 
 Copy your chosen license into your repository and fill in the placeholders: author name, tree hash (`git rev-parse HEAD^{tree}`), and today's date.
@@ -57,7 +85,7 @@ Copy your chosen license into your repository and fill in the placeholders: auth
 
 Copy `.github/workflows/timestamp.yml` into your repository. Each push to main or master will:
 
-- Compute your repo's tree hash (SHA-512 fingerprint of every file)
+- Compute your repo's tree hash (Git's content hash for the tracked repository tree)
 - Timestamp it via FreeTSA.org (RFC 3161)
 - Save the `.tsr` proof in `.timestamps/`
 - Commit and push the evidence
@@ -92,6 +120,8 @@ Everything happens within your repository. No external service holds your proof.
 | `VERIFY.md` | Independent verification instructions |
 | `.github/workflows/timestamp.yml` | Drop-in workflow for automatic timestamping |
 | `STAMPED-whitepaper.md` | The full case for why this works |
+
+`LICENSE-APC.md` and `LICENSE-APC-VF.md` are separate license tracks. `APC-VF` extends the base model with ValueFlow terms and is versioned independently.
 
 ---
 

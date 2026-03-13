@@ -9,17 +9,17 @@
 
 This license establishes two things simultaneously.
 
-First, it claims complete ownership of this Work by right of first public disclosure, with cryptographic proof of authorship and date. Second, it grants universal access to use the Work, on the condition that any profit generated from its use is shared with the Author.
+1. It claims complete ownership of this Work by right of first public disclosure, with cryptographic proof of authorship and date. 
+2. It grants universal access to use the Work, on the condition that any profit generated from its use is shared with the Author.
 
 The result is a Work that is fully owned and fully accessible. The Author is compensated. The world benefits. Nothing sits unused behind a locked door.
-
 ---
 
 ## PART ONE: AUTHORSHIP & PATENT CLAIM
 
 ### I. Declaration of Authorship
 
-**Author:** Slavko Stojnić
+**Author:** [AUTHOR NAME OR ENTITY]
 
 All files, ideas, methods, systems, processes, algorithms, architectures, designs, and functional content contained in this repository, project, or body of work (the "Work") are the original creation of the Author.
 
@@ -29,12 +29,15 @@ This publication constitutes a public, timestamped, cryptographically verifiable
 
 | Proof Layer | Value |
 |---|---|
-| **Merkle Root / Git Tree Hash** | `ef55c78c8f66e557ca179dbcd07bc558de8bc74e` |
-| **RFC 3161 Timestamp Token** | `.timestamps/ef55c78c8f66e557ca179dbcd07bc558de8bc74e.tsr` |
-| **Redundant Timestamp** | `.timestamps/ef55c78c8f66e557ca179dbcd07bc558de8bc74e.ots` |
-| **Date of First Publication** | `2026-02-26 UTC` |
+| **Merkle Root Hash (SHA-512)** | `[INSERT ROOT HASH]` |
+| **Git Tree Hash** (`HEAD^{tree}`) | `[INSERT TREE HASH]` |
+| **RFC 3161 Timestamp Token** | `.timestamps/[HASH].tsr` |
+| **Redundant Timestamp** | `.timestamps/[HASH].ots` |
+| **Date of First Publication** | `[INSERT DATE UTC]` |
 
 The Merkle root is a single cryptographic hash derived from the combined hashes of every file in this Work. A change to any file produces a different root. The root proves the integrity of the Work as an indivisible unit.
+
+The Git tree hash identifies the exact tracked repository state used for publication. It is distinct from the Merkle root and should not be conflated with it.
 
 The RFC 3161 timestamp token binds this root to a verified date and time, signed by an independent Time Stamping Authority. It is verifiable by anyone using OpenSSL. See `VERIFY.md` for instructions.
 
@@ -221,7 +224,7 @@ By accessing, using, implementing, or building upon the Work, you accept the ter
 
 ## HOW TO USE THIS LICENSE
 
-1. Place this file as `LICENSE` in the root of your repository or project.
+1. Place this file as `LICENSE-APC-VF.md` or `LICENSE` in the root of your repository or project, but keep the filename consistent with your repo's references.
 2. Fill in: Author name, hash values, publication date, and pricing model entries.
 3. Add `VERIFY.md` for independent verification instructions.
 4. Add `.github/workflows/timestamp.yml` for automated timestamping.
@@ -231,6 +234,6 @@ See `VERIFY.md` for the manual timestamp process and automated workflow setup.
 
 ---
 
-**© Slavko Stojnić — 2026. All rights reserved.**
+**© [AUTHOR NAME] — [YEAR]. All rights reserved.**
 **Authorship & Patent Claim established by public record.**
 **Universal access granted under ValueFlow profit sharing.**

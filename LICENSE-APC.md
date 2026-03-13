@@ -117,8 +117,8 @@ By accessing, reading, downloading, forking, cloning, or otherwise interacting w
 
 ## HOW TO USE THIS LICENSE
 
-1. Place this file as `LICENSE` or `LICENSE-APC.md` in the root of your repository or project.
-2. Run the timestamping workflow (manual or automated — see `VERIFY.md`).
+1. Place this file as `LICENSE-APC.md` or `LICENSE` in the root of your repository or project.
+2. Run the manual timestamp process from `VERIFY.md` or add `.github/workflows/timestamp.yml` for automated timestamping.
 3. Fill in the proof table in Section II with your actual hashes and dates.
 4. Your first commit is your claim. The timestamp seals it. Done.
 

@@ -40,16 +40,16 @@ For redundancy, the root is also submitted to OpenTimestamps, which anchors it t
 This is not experimental technology. RFC 3161 has been in production since 2001. It is used by banks, governments, and forensics labs. It is legally admissible under EU eIDAS and US Federal Rules of Evidence. It is boring, robust, and incontrovertible.
 
 **4. License.**
-The submission is wrapped in the **APC License** (All Rights Reserved — Authorship & Patent Claim, v1.1). This license explicitly asserts:
+The submission is wrapped in the **APC License** (All Rights Reserved — Authorship & Patent Claim, v1.1). In practice, the package explicitly asserts:
 
 - You are the Author.
 - You reserve all rights — to the expression and to the underlying ideas.
 - The Merkle root hash is your proof of integrity.
-- The timestamp is your patent claim.
+- The timestamp seals the publication evidence for your claim.
 - The public record is your evidence.
 - No permission is granted to anyone for anything without your explicit consent.
 
-The license also establishes irrevocable prior art: if anyone ever tries to patent what you published, your record destroys their claim.
+The license also establishes irrevocable prior art: if anyone later tries to patent what you already published, your record challenges that claim with dated public disclosure.
 
 **5. Package and return.**
 You receive a Stamped bundle containing:
@@ -83,9 +83,9 @@ This creates a closed, self-referencing chain of evidence: the timestamped conte
 
 ### Automated via GitHub Actions
 
-Drop a workflow file into your repo and every push to `main` is automatically timestamped, verified, and committed. No manual steps. The `.timestamps/` folder accumulates a permanent history of cryptographic proofs, one per push. (See VERIFY.md for the complete workflow file.)
+Drop a workflow file into your repo and every push to `main` is automatically timestamped, verified, and committed. No manual steps. The `.timestamps/` folder accumulates a permanent history of cryptographic proofs, one per push. (See `VERIFY.md` and `.github/workflows/timestamp.yml` for the verification and workflow details.)
 
-This means **a GitHub repository with APC + automated timestamping is a continuously self-proving record of authorship** — stronger than a patent filing, because it is updated with every commit, not frozen at a single application date.
+This means **a GitHub repository with APC + automated timestamping is a continuously updated record of authorship evidence**. It evolves with each repository state instead of freezing the proof at a single filing moment.
 
 ---
 
@@ -173,7 +173,10 @@ git commit -m "Initial publication — APC License v1.1"
 TREE_HASH=$(git rev-parse HEAD^{tree})
 echo "Tree hash: $TREE_HASH"
 
-# 3. Timestamp the tree hash via FreeTSA (RFC 3161).
+# 3. Create the proof directory.
+mkdir -p .timestamps
+
+# 4. Timestamp the tree hash via FreeTSA (RFC 3161).
 echo -n "$TREE_HASH" > /tmp/tree_hash.txt
 openssl ts -query -data /tmp/tree_hash.txt -no_nonce -sha512 -cert -out /tmp/request.tsq
 curl -H "Content-Type: application/timestamp-query" \
@@ -181,7 +184,7 @@ curl -H "Content-Type: application/timestamp-query" \
      https://freetsa.org/tsr \
      -o .timestamps/${TREE_HASH}.tsr
 
-# 4. Verify immediately.
+# 5. Verify immediately.
 wget https://freetsa.org/files/tsa.crt
 wget https://freetsa.org/files/cacert.pem
 openssl ts -verify -in .timestamps/${TREE_HASH}.tsr \
@@ -189,8 +192,7 @@ openssl ts -verify -in .timestamps/${TREE_HASH}.tsr \
      -CAfile cacert.pem -untrusted tsa.crt
 # → "Verification: OK"
 
-# 5. Commit the proof and push.
-mkdir -p .timestamps
+# 6. Commit the proof and push.
 git add .timestamps/
 git commit -m "APC timestamp proof: tree $TREE_HASH"
 git push -u origin main

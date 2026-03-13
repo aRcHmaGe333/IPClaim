@@ -57,14 +57,7 @@ case "$LICENSE_TYPE" in
   *)      echo "Error: Invalid license type '$LICENSE_TYPE'. Use 'apc' or 'apc-vf'."; exit 1 ;;
 esac
 
-# --- Determine source license path ---
-if [ "$LICENSE_TYPE" = "apc-vf" ] && [ -f "$SCRIPT_DIR/Updates for IPClaim and ValueFlow/LICENSE-APC-VF.md" ]; then
-  LICENSE_SRC="$SCRIPT_DIR/Updates for IPClaim and ValueFlow/LICENSE-APC-VF.md"
-elif [ "$LICENSE_TYPE" = "apc-vf" ] && [ -f "$SCRIPT_DIR/Updates for PatentMake and ValueFlow/LICENSE-APC-VF.md" ]; then
-  LICENSE_SRC="$SCRIPT_DIR/Updates for PatentMake and ValueFlow/LICENSE-APC-VF.md"
-else
-  LICENSE_SRC="$SCRIPT_DIR/$LICENSE_FILE"
-fi
+LICENSE_SRC="$SCRIPT_DIR/$LICENSE_FILE"
 
 if [ ! -f "$LICENSE_SRC" ]; then
   echo "Error: License template not found at $LICENSE_SRC"
@@ -103,18 +96,28 @@ cp "$SCRIPT_DIR/.github/workflows/timestamp.yml" "$TARGET/.github/workflows/time
 cp "$SCRIPT_DIR/VERIFY.md" "$TARGET/VERIFY.md"
 cp "$LICENSE_SRC" "$TARGET/$LICENSE_FILE"
 
+escape_sed_replacement() {
+  printf '%s' "$1" | sed -e 's/[&|\\]/\\&/g'
+}
+
+AUTHOR_ESCAPED="$(escape_sed_replacement "$AUTHOR")"
+TREE_HASH_ESCAPED="$(escape_sed_replacement "$TREE_HASH")"
+DATE_ESCAPED="$(escape_sed_replacement "$DATE_UTC UTC")"
+YEAR_ESCAPED="$(escape_sed_replacement "$YEAR")"
+
 # --- Fill placeholders in license ---
-sed -i \
-  -e "s/\[AUTHOR NAME OR ENTITY\]/$AUTHOR/g" \
-  -e "s/\[AUTHOR NAME\]/$AUTHOR/g" \
-  -e "s/\[INSERT ROOT HASH\]/$TREE_HASH/g" \
-  -e "s/\[INSERT TREE HASH\]/$TREE_HASH/g" \
-  -e "s/\[INSERT HASH\]/$TREE_HASH/g" \
-  -e "s/\[HASH\]/$TREE_HASH/g" \
-  -e "s/\[INSERT DATE AND TIME UTC\]/$DATE_UTC UTC/g" \
-  -e "s/\[INSERT DATE UTC\]/$DATE_UTC UTC/g" \
-  -e "s/\[YEAR\]/$YEAR/g" \
+sed -i.bak \
+  -e "s|\[AUTHOR NAME OR ENTITY\]|$AUTHOR_ESCAPED|g" \
+  -e "s|\[AUTHOR NAME\]|$AUTHOR_ESCAPED|g" \
+  -e "s|\[INSERT ROOT HASH\]|$TREE_HASH_ESCAPED|g" \
+  -e "s|\[INSERT TREE HASH\]|$TREE_HASH_ESCAPED|g" \
+  -e "s|\[INSERT HASH\]|$TREE_HASH_ESCAPED|g" \
+  -e "s|\[HASH\]|$TREE_HASH_ESCAPED|g" \
+  -e "s|\[INSERT DATE AND TIME UTC\]|$DATE_ESCAPED|g" \
+  -e "s|\[INSERT DATE UTC\]|$DATE_ESCAPED|g" \
+  -e "s|\[YEAR\]|$YEAR_ESCAPED|g" \
   "$TARGET/$LICENSE_FILE"
+rm -f "$TARGET/$LICENSE_FILE.bak"
 
 echo "Files copied and placeholders filled."
 

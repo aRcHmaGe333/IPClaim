@@ -5,7 +5,9 @@ Thumbs.db
 
 # Local working material not intended for public repo history.
 Concept_Files/
-Updates for PatentMake and ValueFlow/
+Updates for IPClaim and ValueFlow/
+ACTION-PLAN.md
+timestamp.yml
 
 # Optional local build/temp outputs.
 dist/
