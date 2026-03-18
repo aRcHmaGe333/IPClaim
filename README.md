@@ -1,22 +1,23 @@
 # IPClaim
 
-**Intellectual Property Claim for the Post-Patent World**
+**Intellectual Property Claim for Am Era of Progress**
 
 IPClaim is a repo toolkit and proof model for publishing authorship claims as public, timestamped, independently verifiable records. `Stamped` is the service/bundling layer built on the same model, not a separate proof system.
 
-## A New Way to Claim What's Yours
+## IPClaim: Meta-Proof - Your work is its own witness
 
-IPClaim replaces traditional paperwork and gatekeeping with cryptographic certainty. Your work stands as its own testament — timestamped, verifiable, and enduring.
-
-- Proof embedded in your code
+IPClaim replaces traditional paperwork and gatekeeping with cryptographic certainty. 
+Your work is its own ID, stands as its own testament — timestamped, verifiable, and enduring.
+- Proof embedded in your code, blueprint, disclosure
 - Authorship verifiable by anyone, anywhere
 - Ownership based on evidence
 
 One system is based on evidence. The other is based on permission.
-
 ---
 
-## You Claim What You Made. That's It.
+## You Claim What You Made 
+when you
+## Show it to the World
 
 You don't need to know which parts of your work are protectable and which aren't. You don't need to hire a lawyer to figure out the boundaries. You don't need to search databases to check if someone else did something similar. You don't need to classify your work into legal categories.
 
