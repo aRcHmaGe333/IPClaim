@@ -58,5 +58,24 @@ jobs:
           git config user.name "APC Timestamp Bot"
           git config user.email "apc-bot@users.noreply.github.com"
           git add .timestamps/
-          git diff --cached --quiet || git commit -m "[APC] Timestamp proof recorded"
-          git push
+          if git diff --cached --quiet; then
+            echo "Proof already recorded; no commit required."
+            exit 0
+          fi
+          git commit -m "[APC] Timestamp proof recorded"
+
+          # Concurrent pushes may advance the branch before this proof is saved.
+          # Rebase the proof commit onto the current branch and retry without dropping it.
+          for attempt in {1..12}; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              echo "Timestamp proof committed and published."
+              exit 0
+            fi
+            if [ "$attempt" -eq 12 ]; then
+              echo "Failed to publish proof after 12 attempts." >&2
+              exit 1
+            fi
+            git fetch --no-tags origin "${GITHUB_REF_NAME}"
+            git rebase FETCH_HEAD
+            sleep "$attempt"
+          done
